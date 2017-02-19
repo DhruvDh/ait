@@ -6,7 +6,7 @@ var dataStore = require('nedb');
 var db = new dataStore({filename: path.join(__dirname, 'db','db')});
 db.loadDatabase();
 
-db.insert({name: "Nishita", class: "TE IT A"});
+db.insert({name: "Dhruv", class: "TE IT A"});
 db.insert({name: "Parth", class: "Third"});
 
 app.use(express.static(path.join(__dirname, 'node_modules')));
