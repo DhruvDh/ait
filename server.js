@@ -1,7 +1,11 @@
-var express = require('express');
+var express = require('express'),
+    app = express();
 var path = require('path');
-var app = express();
 var dataStore = require('nedb');
+var natural = require('natural'),
+    intentCalssifier = new natural.BayesClassifier(),
+    subjectClassifier = new natural.BayesClassifier(),
+
 
 var db = new dataStore({filename: path.join(__dirname, 'db','db')});
 db.loadDatabase();
@@ -13,5 +17,6 @@ app.get('/',function(req, res){
 });
 
 var server = app.listen(process.env.PORT || '3000',function(){
-    console.log('The servers up yo.')
+    classifier.addDocument('write se experiment 2', 'Write');
+    console.log('The servers up yo.');
 });
