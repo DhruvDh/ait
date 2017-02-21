@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js"></script>
@@ -12,15 +12,26 @@
 </head>
 
 <body ng-app="ait">
-    <div md-whiteframe="9">
-        <md-button>Hey Monesha Murderbae, <br>please write the summary <br>of the meeting and <br>then mail it to me, <br>I'll edit it. We've to <br>send before tomorow morning</md-button>
-    </div>
+    <md-toolbar>
+        Hello
+    </md-toolbar>
+    <md-sidenav>
+        How you doing
+    </md-sidenav>
     <script>
         // Include app dependency on ngMaterial
 
         angular.module('ait', ['ngMaterial'])
             .run(function () {
                 console.log('My app is ready.');
+            })
+            .config(function ($mdThemingProvider) {
+                $mdThemingProvider.theme('default').dark();
+                $mdThemingProvider.enableBrowserColor({
+                    theme: 'default',
+                    palette: 'primary',
+                    hue: '800'
+                })
             });
     </script>
 
