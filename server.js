@@ -28,6 +28,10 @@ app.get('/',function(req, res){
 app.get('/training',function(req, res){
     res.sendFile(path.join(__dirname, 'training.html'));
 });
+
+app.get('/login',function(req, res){
+    res.sendFile(path.join(__dirname, 'login.html'));
+});
 app.post('/training',function(req, res){
     intentCalssifier.addDocument(req.body.query, req.body.intent);
     subjectClassifier.addDocument(req.body.query, req.body.subject);
