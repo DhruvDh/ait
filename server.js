@@ -5,7 +5,9 @@ var path = require('path');
 var dataStore = require('nedb');
 var natural = require('natural'),
     intentCalssifier = new natural.BayesClassifier(),
-    subjectClassifier = new natural.BayesClassifier();
+    subjectClassifier = new natural.BayesClassifier(),
+    typeClassifier = new natural.BayesClassifier(),
+    ordinalClassifier = new natural.BayesClassifier();
 
 
 var db = new dataStore({filename: path.join(__dirname, 'db','db')});
@@ -27,7 +29,8 @@ app.get('/training',function(req, res){
     res.sendFile(path.join(__dirname, 'training.html'));
 });
 app.post('/training',function(req, res){
-    console.log(req.body.query);
+    intentCalssifier.addDocument(req.body.query, req.body.intent);
+    subjectClassifier.addDocument(req.body.query, req.body.subject);
 });
 
 var server = app.listen(process.env.PORT || '3000',function(){
