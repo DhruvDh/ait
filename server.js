@@ -33,8 +33,8 @@ app.get('/login',function(req, res){
     res.sendFile(path.join(__dirname, 'login.html'));
 });
 app.post('/training',function(req, res){
-    intentCalssifier.addDocument(req.body.query, req.body.intent);
-    subjectClassifier.addDocument(req.body.query, req.body.subject);
+    if(req.body.query)
+        res.sendStatus(200);
 });
 
 var server = app.listen(process.env.PORT || '3000',function(){
