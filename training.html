@@ -67,7 +67,10 @@
                     console.log('Clicked go');
                     console.log(formData);
                     $http.post('/training', formData)
-                        .success(function () { $scope.count++; })
+                        .success(function (res, status) {
+                             $scope.count++;
+                             $scope.error = res.subject;
+                         })
                         .error(function () { $scope.error = "Sorry, could not post." });
                 };
             });

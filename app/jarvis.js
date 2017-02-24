@@ -15,8 +15,9 @@ module.exports = {
     trainSubject: function(query, subject){
         subjectClassifier.addDocument(query, subject);
         subjectTrainer.insert({query: query, label: subject});
+        subjectClassifier.train();
     },
     getSubject: function(query, context){
-
+        return subjectClassifier.classify(query);
     }
 };
