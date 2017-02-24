@@ -13,8 +13,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-JARVIS.initSubjectClassifier();
-
 
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
@@ -31,8 +29,10 @@ app.get('/login', function (req, res) {
 });
 app.post('/training', function (req, res) {
     if (req.body.query) {
+        console.log(req.body);
         JARVIS.trainSubject(req.body.query, req.body.subject)
-        res.json({subject: JARVIS.getSubject()});
+        res.sendStatus(200);
+        //res.json({subject: JARVIS.getSubject(req.body.query)});
     }
 });
 

@@ -2,22 +2,21 @@ var dataStore = require('nedb');
 var natural = require('natural'),
     dayClassifier = new natural.BayesClassifier(),
     typeClassifier = new natural.BayesClassifier();
-var dayTrainer = new dataStore({filename: './db/dayTrainer'});
-var typeTrainer = new dataStore({filename: './db/typeTrainer'});
-
+var dayTrainer = new dataStore({ filename: './db/dayTrainer' });
+var typeTrainer = new dataStore({ filename: './db/typeTrainer' });
+var subjectClassifier = new natural.BayesClassifier();
+var subjectTrainer = new dataStore({ filename: './db/subjectTrainer' });
+subjectTrainer.loadDatabase();
+var subjecttTrainerTemplate = new dataStore({ filename: './db/subjectTrainerTemplate' });
+subjecttTrainerTemplate.loadDatabase();
 
 module.exports = {
-    initSubjectClassifier: function(){
-        var subjectClassifier = new natural.BayesClassifier();
-        var subjectTrainer = new dataStore({filename: './db/subjectTrainer'});
-        subjectTrainer.loadDatabase();
+    trainSubject: function (query, subject) {
+        //subjectClassifier.addDocument(query, subject);
+        subjecttTrainerTemplate.insert({ query: query, label: "%label%" });
+        //subjectClassifier.train();
     },
-    trainSubject: function(query, subject){
-        subjectClassifier.addDocument(query, subject);
-        subjectTrainer.insert({query: query, label: subject});
-        subjectClassifier.train();
-    },
-    getSubject: function(query, context){
+    getSubject: function (query) {
         return subjectClassifier.classify(query);
     }
 };
