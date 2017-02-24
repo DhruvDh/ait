@@ -3,12 +3,7 @@ var express = require('express'),
     app = express();
 var path = require('path');
 var dataStore = require('nedb');
-var natural = require('natural'),
-    intentCalssifier = new natural.BayesClassifier(),
-    subjectClassifier = new natural.BayesClassifier(),
-    typeClassifier = new natural.BayesClassifier(),
-    ordinalClassifier = new natural.BayesClassifier();
-
+var JARVIS = require('./app/jarvis.js');
 
 var db = new dataStore({filename: path.join(__dirname, 'db','db')});
 db.loadDatabase();
