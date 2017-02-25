@@ -29,10 +29,14 @@ app.get('/login', function (req, res) {
 });
 app.post('/training', function (req, res) {
     if (req.body.query) {
-        console.log(req.body);
-        JARVIS.trainSubject(req.body.query, req.body.subject)
-        res.sendStatus(200);
-        //res.json({subject: JARVIS.getSubject(req.body.query)});
+        JARVIS.trainSubject();
+        JARVIS.trainType();
+        JARVIS.trainDays();
+        res.json({
+            subject: JARVIS.getSubject(req.body.query),
+            type: JARVIS.getType(req.body.query),
+            day: JARVIS.getDay(req.body.query)
+        });
     }
 });
 

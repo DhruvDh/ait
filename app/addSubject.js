@@ -1,6 +1,6 @@
 var dataStore = require('nedb');
 var natural = require('natural');
-var classifier = new natural.BayesClassifier();
+
 
 var subjectTrainer = new dataStore({ filename: './db/subjectTrainer' });
 subjectTrainer.loadDatabase();
@@ -8,14 +8,27 @@ var subjecttTrainerTemplate = new dataStore({ filename: './db/subjectTrainerTemp
 subjecttTrainerTemplate.loadDatabase();
 
 module.exports = {
-    addSubject: function (subject, label) {
+    adder: function (subjects, label) {
+        console.log("addSubject called");
         subjecttTrainerTemplate.find({}, function (err, docs) {
-            for (x in subject) {
-                subjectTrainer.insert({
-                    query: docs.query.replace(/%.*%/g, subject[x]),
-                    label: label
+            console.log(docs);
+            console.log(err);
+            
+            subjects.forEach(function (subject, i, x) {
+                docs.forEach(function (doc, j, y) {
+                    subjectTrainer.insert({
+                        query: doc.query.replace(/%.*%/g, subject),
+                        label: label
+                    });
                 });
-            }
+            });
         });
     }
 };
+
+
+// addSubject.adder(["ait", "AIT", "Advanced Internet Technology"], "AIT");
+// addSubject.adder(["se", "SE", "Software Engineering"], "SE");
+// addSubject.adder(["ds", "DS", "Distributed Systems"], "DS");
+// addSubject.adder(["dmbi", "DMBI", "Data Mining and Business Intelligence"], "DMBI");
+// addSubject.adder(["sws", "SWS", "System and Web Security"], "SWS");
