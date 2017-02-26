@@ -127,21 +127,41 @@ module.exports = {
         return ordinals;
     },
     getDay: function (query) {
-        return {
-            class: dayClassifier.classify(query),
-            classifications: dayClassifier.getClassifications(query)
-        };
+        var res = {};
+        res.found = false;
+        res.class = dayClassifier.classify(query);
+        res.classifications = dayClassifier.classify(query);
+        
+        res.classifications.forEach(function(x, i, y){
+            if(x.value != 0.5)
+                res.found = true;    
+        })
+
+        return res;
     },
     getType: function (query) {
-        return {
-            class: typeClassifier.classify(query),
-            classifications: typeClassifier.getClassifications(query)
-        };
+        var res = {};
+        res.found = false;
+        res.class = typeClassifier.classify(query);
+        res.classifications = typeClassifier.classify(query);
+        
+        res.classifications.forEach(function(x, i, y){
+            if(x.value != 0.5)
+                res.found = true;    
+        })
+
+        return res;
     },
     getSubject: function (query) {
-        return {
-            class: subjectClassifier.classify(query),
-            classifications: subjectClassifier.getClassifications(query)
-        };
-    }
+       var res = {};
+        res.found = false;
+        res.class = subjectClassifier.classify(query);
+        res.classifications = subjectClassifier.classify(query);
+        
+        res.classifications.forEach(function(x, i, y){
+            if(x.value != 0.5)
+                res.found = true;    
+        })
+
+        return res;
 };
