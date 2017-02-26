@@ -44,6 +44,24 @@ app.post('/training', function (req, res) {
     }
 });
 
+app.get('/trainingSEIT', function (req, res) {
+    res.sendFile(path.join(__dirname, 'trainingSEIT.html'));
+});
+
+app.post('/trainingSEIT', function (req, res) {
+    if (req.body.query) {
+        JARVISSEIT.trainSubject();
+        JARVISSEIT.trainType();
+        JARVISSEIT.trainDays();
+
+        res.json({
+            subject: JARVISSEIT.getSubject(req.body.query),
+            type: JARVISSEIT.getType(req.body.query),
+            day: JARVISSEIT.getDay(req.body.query),
+            ordinals: JARVISSEIT.getOrdinal(req.body.query)
+        });
+    }
+});
 var server = app.listen(process.env.PORT || '3000', function () {
     //classifier.addDocument('write se experiment 2', 'Write');
     console.log('The servers up yo.');
