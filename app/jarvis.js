@@ -131,10 +131,10 @@ module.exports = {
         res.found = false;
         res.class = dayClassifier.classify(query);
         res.classifications = dayClassifier.classify(query);
-        
-        res.classifications.forEach(function(x, i, y){
-            if(x.value != 0.5)
-                res.found = true;    
+
+        res.classifications.forEach(function (x, i, y) {
+            if (x.value != 0.5)
+                res.found = true;
         })
 
         return res;
@@ -144,24 +144,25 @@ module.exports = {
         res.found = false;
         res.class = typeClassifier.classify(query);
         res.classifications = typeClassifier.classify(query);
-        
-        res.classifications.forEach(function(x, i, y){
-            if(x.value != 0.5)
-                res.found = true;    
+
+        res.classifications.forEach(function (x, i, y) {
+            if (x.value != 0.5)
+                res.found = true;
         })
 
         return res;
     },
     getSubject: function (query) {
-       var res = {};
+        var res = {};
         res.found = false;
         res.class = subjectClassifier.classify(query);
         res.classifications = subjectClassifier.classify(query);
-        
-        res.classifications.forEach(function(x, i, y){
-            if(x.value != 0.5)
-                res.found = true;    
+
+        res.classifications.forEach(function (x, i, y) {
+            if (x.value != 0.5)
+                res.found = true;
         })
 
         return res;
+    }
 };
