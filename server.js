@@ -3,7 +3,9 @@ var express = require('express'),
 app = express();
 var path = require('path');
 var dataStore = require('nedb');
+var JARVISSEIT = require('./app/jarvisSEIT.js');
 var JARVIS = require('./app/jarvis.js');
+
 
 var db = new dataStore({ filename: path.join(__dirname, 'db', 'db') });
 db.loadDatabase();
