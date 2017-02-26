@@ -46,8 +46,8 @@
             <ul>
                 <li>Subject: <span ng-if="!res.subject.found">Not Found</span><span ng-if="res.subject.found">{{res.subject.class}}</span> </li>
                 <li>Type: <span ng-if="!res.type.found">Not Found</span><span ng-if="res.type.found">{{res.type.class}}</span> </li>
-                <li>Ordinals: <span ng-if="!res.ordinals.found">Not Found</span><span ng-if="res.ordinals.found">{{res.ordinals.class}}</span> </li>
-                <li>Day: <span ng-if="!res.day.found">Not Found</span><span ng-if="res.found">{{res.day.class}}</span> </li>
+                <li>Ordinals: {{res.ordinals}} </li>
+                <li>Day: <span ng-if="!res.day.found">Not Found</span><span ng-if="res.day.found">{{res.day.class}}</span> </li>
             </ul>
         </h2>
         <h3 ng-if="res.subject.found" ng-repeat="x in res.subject.classifications">{{x.label}}: {{x.value}} </h3>
@@ -80,6 +80,7 @@
                         .success(function (res, status) {
                              $scope.count++;
                              $scope.res = res;
+                             console.log(res);
                          })
                         .error(function () { $scope.error = "Sorry, could not post." });
                 };

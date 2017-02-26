@@ -130,7 +130,7 @@ module.exports = {
         var res = {};
         res.found = false;
         res.class = dayClassifier.classify(query);
-        res.classifications = dayClassifier.classify(query);
+        res.classifications = dayClassifier.getClassifications(query);
 
         res.classifications.forEach(function (x, i, y) {
             if (x.value != 0.5)
@@ -143,7 +143,7 @@ module.exports = {
         var res = {};
         res.found = false;
         res.class = typeClassifier.classify(query);
-        res.classifications = typeClassifier.classify(query);
+        res.classifications = typeClassifier.getClassifications(query);
 
         res.classifications.forEach(function (x, i, y) {
             if (x.value != 0.5)
@@ -156,7 +156,7 @@ module.exports = {
         var res = {};
         res.found = false;
         res.class = subjectClassifier.classify(query);
-        res.classifications = subjectClassifier.classify(query);
+        res.classifications = subjectClassifier.getClassifications(query);
 
         res.classifications.forEach(function (x, i, y) {
             if (x.value != 0.5)
