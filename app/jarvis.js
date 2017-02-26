@@ -111,7 +111,6 @@ module.exports = {
             temp = suceceedingOrdinals.exec(query + " ");
             if (temp) {
                 isOrdinalPreceeder = false;
-                console.log("Pushing " + temp[1]);
                 ordinals.push(temp[1]);
             }
         } while (temp);
@@ -120,7 +119,6 @@ module.exports = {
             do {
                 temp = preceedingOrdianls.exec(query + " ");
                 if (temp) {
-                    console.log("Pushing " + temp);
                     ordinals.push(temp[1]);
                 }
             } while (temp);
