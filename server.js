@@ -32,10 +32,12 @@ app.post('/training', function (req, res) {
         JARVIS.trainSubject();
         JARVIS.trainType();
         JARVIS.trainDays();
+
         res.json({
             subject: JARVIS.getSubject(req.body.query),
             type: JARVIS.getType(req.body.query),
-            day: JARVIS.getDay(req.body.query)
+            day: JARVIS.getDay(req.body.query),
+            ordinals: JARVIS.getOrdinal(req.body.query)
         });
     }
 });

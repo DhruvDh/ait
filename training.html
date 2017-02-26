@@ -42,7 +42,14 @@
         <option value="next2">Next to Next</option>
     </select><br> <input type="submit" value="Go"> <br>
         <h1>Submitted - {{count}} times.</h1>
-        <h2>Response: {{res.subject.class}} {{res.type.class}} {{res.day.class}}</h2>
+        <h2>Response: 
+            <ul>
+                <li>Subject: {{res.subject.class}} </li>
+                <li>Type: {{res.type.class}} </li>
+                <li>Ordinals: {{res.ordinals}} </li>
+                <li>Day: {{res.day.class}} </li>
+            </ul>
+        </h2>
         <h3 ng-repeat="x in res.subject.classifications">{{x.label}}: {{x.value}} </h3>
         <h3 ng-repeat="x in res.type.classifications">{{x.label}}: {{x.value}} </h3>
         <h3 ng-repeat="x in res.day.classifications">{{x.label}}: {{x.value}} </h3>

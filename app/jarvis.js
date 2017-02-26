@@ -2,8 +2,9 @@ var dataStore = require('nedb');
 var addSubject = require('./addSubject.js');
 
 var natural = require('natural'),
-    dayClassifier = new natural.BayesClassifier(),
-    typeClassifier = new natural.LogisticRegressionClassifier();
+    dayClassifier = new natural.LogisticRegressionClassifier(),
+    typeClassifier = new natural.LogisticRegressionClassifier(),
+    treeBank = new natural.RegexpTokenizer({ pattern: /[,\s]+/ });
 
 var dayTrainer = new dataStore({ filename: './db/dayTrainer' });
 var typeTrainer = new dataStore({ filename: './db/typeTrainer' });
@@ -58,63 +59,88 @@ module.exports = {
         typeClassifier.addDocument("tut", "Tutorial");
         typeClassifier.train();
     },
-    trainDays: function() {
-        dayClassifier.addDocument("monday","Monday");
-        dayClassifier.addDocument("mon","Monday");
-        dayClassifier.addDocument("Tuesday","Tuesday");
-        dayClassifier.addDocument("tues","Tuesday");
-        dayClassifier.addDocument("wednesday","Wednesday");
-        dayClassifier.addDocument("wed","Wednesday");
-        dayClassifier.addDocument("thursday","Thursday");
-        dayClassifier.addDocument("thurs","Thursday");
-        dayClassifier.addDocument("friday","Friday");
-        dayClassifier.addDocument("friday","Friday");
-        dayClassifier.addDocument("saturday","Saturday");
-        dayClassifier.addDocument("sat","Saturday");
-        dayClassifier.addDocument("sunday","Sunday");
-        dayClassifier.addDocument("sun","Sunday");
+    trainDays: function () {
+        dayClassifier.addDocument("monday", "Monday");
+        dayClassifier.addDocument("mon", "Monday");
+        dayClassifier.addDocument("Tuesday", "Tuesday");
+        dayClassifier.addDocument("tues", "Tuesday");
+        dayClassifier.addDocument("wednesday", "Wednesday");
+        dayClassifier.addDocument("wed", "Wednesday");
+        dayClassifier.addDocument("thursday", "Thursday");
+        dayClassifier.addDocument("thurs", "Thursday");
+        dayClassifier.addDocument("friday", "Friday");
+        dayClassifier.addDocument("friday", "Friday");
+        dayClassifier.addDocument("saturday", "Saturday");
+        dayClassifier.addDocument("sat", "Saturday");
+        dayClassifier.addDocument("sunday", "Sunday");
+        dayClassifier.addDocument("sun", "Sunday");
 
-        dayClassifier.addDocument("next monday","NextMonday");
-        dayClassifier.addDocument("next mon","NextMonday");
-        dayClassifier.addDocument("next Tuesday","NextTuesday");
-        dayClassifier.addDocument("next tues","NextTuesday");
-        dayClassifier.addDocument("next wednesday","NextWednesday");
-        dayClassifier.addDocument("next wed","NextWednesday");
-        dayClassifier.addDocument("next thursday","NextThursday");
-        dayClassifier.addDocument("next thurs","NextThursday");
-        dayClassifier.addDocument("next friday","NextFriday");
-        dayClassifier.addDocument("next friday","NextFriday");
-        dayClassifier.addDocument("next saturday","NextSaturday");
-        dayClassifier.addDocument("next sat","NextSaturday");
-        dayClassifier.addDocument("next sunday","NextSunday");
-        dayClassifier.addDocument("next sun","NextSunday");
+        dayClassifier.addDocument("next monday", "NextMonday");
+        dayClassifier.addDocument("next mon", "NextMonday");
+        dayClassifier.addDocument("next Tuesday", "NextTuesday");
+        dayClassifier.addDocument("next tues", "NextTuesday");
+        dayClassifier.addDocument("next wednesday", "NextWednesday");
+        dayClassifier.addDocument("next wed", "NextWednesday");
+        dayClassifier.addDocument("next thursday", "NextThursday");
+        dayClassifier.addDocument("next thurs", "NextThursday");
+        dayClassifier.addDocument("next friday", "NextFriday");
+        dayClassifier.addDocument("next friday", "NextFriday");
+        dayClassifier.addDocument("next saturday", "NextSaturday");
+        dayClassifier.addDocument("next sat", "NextSaturday");
+        dayClassifier.addDocument("next sunday", "NextSunday");
+        dayClassifier.addDocument("next sun", "NextSunday");
 
-        dayClassifier.addDocument("tomorrow","Tomorrow");
-        dayClassifier.addDocument("tom","Tomorrow");
-        dayClassifier.addDocument("by tomorrow","Tomorrow");
-        dayClassifier.addDocument("by tom","Tomorrow");
-        dayClassifier.addDocument("next week","NextWeek");
-        dayClassifier.addDocument("day after tomorrow","Tomorrow2");
-        dayClassifier.addDocument("day after tom","Tomorrow2");
+        dayClassifier.addDocument("tomorrow", "Tomorrow");
+        dayClassifier.addDocument("tom", "Tomorrow");
+        dayClassifier.addDocument("by tomorrow", "Tomorrow");
+        dayClassifier.addDocument("by tom", "Tomorrow");
+        dayClassifier.addDocument("next week", "NextWeek");
+        dayClassifier.addDocument("day after tomorrow", "Tomorrow2");
+        dayClassifier.addDocument("day after tom", "Tomorrow2");
 
-        dayClassifier.train();        
+        dayClassifier.train();
     },
-     getDay: function (query) {
-        console.log(query);
+    getOrdinal: function (query) {
+        var isOrdinalPreceeder = true;
+        var suceceedingOrdinals = /(\d+)[\s,]+/ig;
+        var preceedingOrdianls = /(\d+)\w{2}[\s,]*/ig;
+
+        var ordinals = [];
+        var temp;
+        do {
+            temp = suceceedingOrdinals.exec(query + " ");
+            if (temp) {
+                isOrdinalPreceeder = false;
+                console.log("Pushing " + temp[1]);
+                ordinals.push(temp[1]);
+            }
+        } while (temp);
+
+        if (isOrdinalPreceeder) {
+            do {
+                temp = preceedingOrdianls.exec(query + " ");
+                if (temp) {
+                    console.log("Pushing " + temp);
+                    ordinals.push(temp[1]);
+                }
+            } while (temp);
+        }
+
+        return ordinals;
+    },
+    getDay: function (query) {
         return {
             class: dayClassifier.classify(query),
             classifications: dayClassifier.getClassifications(query)
         };
     },
     getType: function (query) {
-        console.log(query);
         return {
             class: typeClassifier.classify(query),
             classifications: typeClassifier.getClassifications(query)
         };
     },
     getSubject: function (query) {
-        console.log(query);
         return {
             class: subjectClassifier.classify(query),
             classifications: subjectClassifier.getClassifications(query)

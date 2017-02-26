@@ -14,14 +14,15 @@ module.exports = {
             console.log(docs);
             console.log(err);
             
-            subjects.forEach(function (subject, i, x) {
+            // subjects.forEach(function (subject, i, x) {
                 docs.forEach(function (doc, j, y) {
-                    subjectTrainer.insert({
-                        query: doc.query.replace(/%.*%/g, subject),
-                        label: label
-                    });
+                    console.log(doc.query.replace(/%.*%/g, subjects)); // make this subject
+                    // subjectTrainer.insert({
+                    //     query: doc.query.replace(/%.*%/g, subject),
+                    //     label: label
+                    // });
                 });
-            });
+            // });
         });
     }
 };
