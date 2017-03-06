@@ -41,6 +41,8 @@ module.exports = {
         typeClassifier.addDocument("experiment", "Experiment");
         typeClassifier.addDocument("expt", "Experiment");
         typeClassifier.addDocument("exp", "Experiment");
+        typeClassifier.addDocument("practical", "Experiment");
+        typeClassifier.addDocument("prac", "Experiment");
         typeClassifier.addDocument("output", "Experiment/Output");
         typeClassifier.addDocument("screenshot", "Experiment/Output");
         typeClassifier.addDocument("ss", "Experiment/Output");
