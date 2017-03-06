@@ -74,6 +74,7 @@ app.controller('toDoControl', function ($scope, $http, $window) {
         console.log("Session id is: "+id);
         $http.post('/training', { "_id":  id, "query": $scope.toDoQuery}).then(
             function(res, status) {
+                $scope.toDoList = [];
                 $scope.res = res.data;
                 res.data.toDoList.forEach(function(todo, index, todos) {
                     $scope.toDoList.push(todo.query);
