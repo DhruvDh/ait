@@ -42,8 +42,8 @@ module.exports = {
         typeClassifier.addDocument("expt", "Experiment");
         typeClassifier.addDocument("exp", "Experiment");
         typeClassifier.addDocument("output", "Experiment/Output");
-        typeClassifier.addDocument("screenshot", "Experiment/Screenshot");
-        typeClassifier.addDocument("ss", "Experiment/ss");
+        typeClassifier.addDocument("screenshot", "Experiment/Output");
+        typeClassifier.addDocument("ss", "Experiment/Output");
         typeClassifier.addDocument("conclusion", "Experiment/Conclusion");
         typeClassifier.addDocument("conc", "Experiment/Conculsion");
         typeClassifier.addDocument("post exp", "Experiment/PostExp");
@@ -93,9 +93,13 @@ module.exports = {
         typeClassifier.addDocument("text book", "Book/Text");
         typeClassifier.addDocument("reference book", "Book/Reference");
         typeClassifier.addDocument("ref book", "Book/Reference");
-        typeClassifier.addDocument("textbook", "Book/Reference");
-        typeClassifier.addDocument("textbook", "Book/Note");
-        typeClassifier.addDocument("textbook", "Book/Note");
+        typeClassifier.addDocument("notebook", "Book/Note");
+        typeClassifier.addDocument("note book", "Book/Note");
+
+        typeClassifier.addDocument("library textbook", "Library/Book/Text");
+        typeClassifier.addDocument("library text book", "Library/Book/Text");
+        typeClassifier.addDocument("library reference book", "Library/Book/Reference");
+        typeClassifier.addDocument("library ref book", "Library/Book/Reference");
         typeClassifier.train();
     },
     trainDays: function () {
@@ -114,26 +118,26 @@ module.exports = {
         dayClassifier.addDocument("sunday", "Sunday");
         dayClassifier.addDocument("sun", "Sunday");
 
-        dayClassifier.addDocument("next monday", "NextMonday");
-        dayClassifier.addDocument("next mon", "NextMonday");
-        dayClassifier.addDocument("next Tuesday", "NextTuesday");
-        dayClassifier.addDocument("next tues", "NextTuesday");
-        dayClassifier.addDocument("next wednesday", "NextWednesday");
-        dayClassifier.addDocument("next wed", "NextWednesday");
-        dayClassifier.addDocument("next thursday", "NextThursday");
-        dayClassifier.addDocument("next thurs", "NextThursday");
-        dayClassifier.addDocument("next friday", "NextFriday");
-        dayClassifier.addDocument("next friday", "NextFriday");
-        dayClassifier.addDocument("next saturday", "NextSaturday");
-        dayClassifier.addDocument("next sat", "NextSaturday");
-        dayClassifier.addDocument("next sunday", "NextSunday");
-        dayClassifier.addDocument("next sun", "NextSunday");
+        dayClassifier.addDocument("next monday", "Next/Monday");
+        dayClassifier.addDocument("next mon", "Next/Monday");
+        dayClassifier.addDocument("next Tuesday", "Next/Tuesday");
+        dayClassifier.addDocument("next tues", "Next/Tuesday");
+        dayClassifier.addDocument("next wednesday", "Next/Wednesday");
+        dayClassifier.addDocument("next wed", "Next/Wednesday");
+        dayClassifier.addDocument("next thursday", "Next/Thursday");
+        dayClassifier.addDocument("next thurs", "Next/Thursday");
+        dayClassifier.addDocument("next friday", "Next/Friday");
+        dayClassifier.addDocument("next friday", "Next/Friday");
+        dayClassifier.addDocument("next saturday", "Next/Saturday");
+        dayClassifier.addDocument("next sat", "Next/Saturday");
+        dayClassifier.addDocument("next sunday", "Next/Sunday");
+        dayClassifier.addDocument("next sun", "Next/Sunday");
 
         dayClassifier.addDocument("tomorrow", "Tomorrow");
         dayClassifier.addDocument("tom", "Tomorrow");
         dayClassifier.addDocument("by tomorrow", "Tomorrow");
         dayClassifier.addDocument("by tom", "Tomorrow");
-        dayClassifier.addDocument("next week", "NextWeek");
+        dayClassifier.addDocument("next week", "Next/Week");
         dayClassifier.addDocument("day after tomorrow", "Tomorrow2");
         dayClassifier.addDocument("day after tom", "Tomorrow2");
 
