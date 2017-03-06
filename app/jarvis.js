@@ -30,33 +30,72 @@ module.exports = {
         subjectClassifier.addDocument("dmbi", "DMBI");
         subjectClassifier.addDocument("sws", "SWS");
         subjectClassifier.addDocument("SWS", "SWS");
-        subjectClassifier.addDocument("System Web Security", "SWS");
+        subjectClassifier.addDocument("ieee", "Committee/IEEE");
+        subjectClassifier.addDocument("iete", "Committee/IETE");
+        subjectClassifier.addDocument("itsa", "Committee/ITSA");
+        subjectClassifier.addDocument("csi", "Committee/CSI");
+        subjectClassifier.addDocument("codex", "Committee/CODEX");
         subjectClassifier.train();
     },
     trainType: function () {
         typeClassifier.addDocument("experiment", "Experiment");
         typeClassifier.addDocument("expt", "Experiment");
         typeClassifier.addDocument("exp", "Experiment");
-        typeClassifier.addDocument("descriptive test", "DT");
-        typeClassifier.addDocument("desc test", "DT");
-        typeClassifier.addDocument("dt", "DT");
-        typeClassifier.addDocument("objective test", "OT");
-        typeClassifier.addDocument("obj test", "OT");
-        typeClassifier.addDocument("ot", "OT");
+        typeClassifier.addDocument("output", "Experiment/Output");
+        typeClassifier.addDocument("screenshot", "Experiment/Screenshot");
+        typeClassifier.addDocument("ss", "Experiment/ss");
+        typeClassifier.addDocument("conclusion", "Experiment/Conclusion");
+        typeClassifier.addDocument("conc", "Experiment/Conculsion");
+        typeClassifier.addDocument("post exp", "Experiment/PostExp");
+        typeClassifier.addDocument("post expt", "Experiment/PostExp");
+
+        typeClassifier.addDocument("descriptive test", "Test/Descriptive");
+        typeClassifier.addDocument("desc test", "Test/Descriptive");
+        typeClassifier.addDocument("dt", "Test/Descriptive");
+        typeClassifier.addDocument("objective test", "Test/Objective");
+        typeClassifier.addDocument("obj test", "Test/Objective");
+        typeClassifier.addDocument("ot", "Test/Objective");
+        typeClassifier.addDocument("internal assesment test", "Test/IA");
+        typeClassifier.addDocument("iat", "Test/IA");
         typeClassifier.addDocument("test", "Test");
+        typeClassifier.addDocument("tutorial test", "Test/Tutorial");
+
         typeClassifier.addDocument("assignment", "Assignment");
         typeClassifier.addDocument("assgn", "Assignment");
-        typeClassifier.addDocument("dt", "DT");
-        typeClassifier.addDocument("internal assesment test", "IAT");
-        typeClassifier.addDocument("iat", "IAT");
-        typeClassifier.addDocument("output", "Output");
-        typeClassifier.addDocument("screenshot", "Output");
-        typeClassifier.addDocument("ss", "Output");
-        typeClassifier.addDocument("conclusion", "Conclusion");
-        typeClassifier.addDocument("conc", "Conclusion");
+        typeClassifier.addDocument("ass", "Assignment")
+
+
         typeClassifier.addDocument("tutorial", "Tutorial");
         typeClassifier.addDocument("tuts", "Tutorial");
         typeClassifier.addDocument("tut", "Tutorial");
+
+        typeClassifier.addDocument("homework", "Homework");
+        typeClassifier.addDocument("hw", "Homework");
+
+        typeClassifier.addDocument("library", "Library");
+
+        typeClassifier.addDocument("payment", "Payment");
+        typeClassifier.addDocument("pay", "Payment");
+
+        typeClassifier.addDocument("register", "Register");
+        typeClassifier.addDocument("registeration", "Register");
+
+        typeClassifier.addDocument("meet", "Meeting");
+        typeClassifier.addDocument("meeting", "Meeting");
+
+        typeClassifier.addDocument("workshop", "Workshop");
+        typeClassifier.addDocument("pay workshop", "Workshop/Payment");
+        typeClassifier.addDocument("payment workshop", "Workshop/Payment");
+
+        typeClassifier.addDocument("seminar", "Seminar");
+
+        typeClassifier.addDocument("textbook", "Book/Text");
+        typeClassifier.addDocument("text book", "Book/Text");
+        typeClassifier.addDocument("reference book", "Book/Reference");
+        typeClassifier.addDocument("ref book", "Book/Reference");
+        typeClassifier.addDocument("textbook", "Book/Reference");
+        typeClassifier.addDocument("textbook", "Book/Note");
+        typeClassifier.addDocument("textbook", "Book/Note");
         typeClassifier.train();
     },
     trainDays: function () {
@@ -105,6 +144,10 @@ module.exports = {
         var suceceedingOrdinals = /(\d+)[\s,]+/ig;
         var preceedingOrdianls = /(\d+)\w{2}[\s,]*/ig;
 
+        var dates = /\d{1,2}[\/\\]\d{1,2}[\/|\\]?\d{0,4}/ig;
+        if (dates.exec(query + " "))
+            query = query.replace(dates.exec(query + " ")[0], ' ');
+
         var ordinals = [];
         var temp;
         do {
@@ -126,7 +169,7 @@ module.exports = {
 
         return ordinals;
     },
-    getDay: function (query) {
+    getDay: function (query, timetable) {
         var res = {};
         res.found = false;
         res.class = dayClassifier.classify(query);
@@ -136,6 +179,37 @@ module.exports = {
             if (x.value != 0.5)
                 res.found = true;
         })
+
+        if (!res.found) {
+            var dates = /\d{1,2}[\/\\]\d{1,2}[\/|\\]?\d{0,4}/ig;
+            res.class = dates.exec(query + " ") ? dates.exec(query + " ")[0] : null;
+            if (res.class)
+                res.found = true;
+            res.classifications = null;
+        }
+
+        var today = new Date();
+        var subject = this.getSubject(query);
+        var type = this.getType(query);
+        var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",];
+        console.log("today is: " + days[today.getDay() - 1]);
+        if (subject.found && !res.found) {
+            if (type.class.search("Experiment") != -1) {
+                timetable.forEach(function (day, index, tt) {
+                    day.forEach(function (period, i, periods) {
+                        if (period != undefined)
+                            if (period.type == "prac")
+                                if (period.subject(2) == subject.class)
+                                    if (index == today.getDay() - 1)
+                                    { res.class = "Today"; res.found = true; }
+                                    else if (index < today.getDay - 1)
+                                    { res.class = "Next/" + days[index]; res.found = true; }
+                                    else
+                                    { res.class = days[index]; res.found = true; }
+                    })
+                })
+            }
+        }
 
         return res;
     },

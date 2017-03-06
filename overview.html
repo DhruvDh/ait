@@ -1,0 +1,22 @@
+<div layout="column" layout-align="center" style="min-height: 40%">
+    <div style="background-color: #303F9F" layout="row">
+            <ul flex-offset="20">
+                <li>Subject: <span ng-if="!res.subject.found">Not Found</span><span ng-if="res.subject.found">{{res.subject.class}}</span> </li>
+                <li>Type: <span ng-if="!res.type.found">Not Found</span><span ng-if="res.type.found">{{res.type.class}}</span> </li>
+                <li>Ordinals: {{res.ordinals}} </li>
+                <li>Day: <span ng-if="!res.day.found">Not Found</span><span ng-if="res.day.found">{{res.day.class}}</span> </li>
+            </ul>
+
+    </div>
+    <div layout="row" layout-align="center center">
+        <md-input-container flex="75">
+            <input ng-model="toDoQuery">
+        </md-input-container>
+        <md-button class="md-primary md-fab material-icons" ng-click="postQuery()">send</md-button>
+    </div>
+</div>
+    <md-list>
+        <md-list-item ng-repeat="x in toDoList track by $index">
+            {{x}}
+        </md-list-item>
+    </md-list>
