@@ -197,7 +197,7 @@ module.exports = {
 
         return ordinals;
     },
-    getDay: function (query, timetable) {
+    getDay: function (query, timetable, batch) {
         var res = {};
         res.found = false;
         res.class = dayClassifier.classify(query);
@@ -227,7 +227,7 @@ module.exports = {
                     day.forEach(function (period, i, periods) {
                         if (period != undefined)
                             if (period.type == "prac")
-                                if (period.subject(2) == subject.class)
+                                if (period.subject(batch) == subject.class)
                                     if (index+1 == today.getDay())
                                     { res.class = "Today"; res.found = true;}
                                     else if (index < today.getDay)
