@@ -98,10 +98,30 @@ module.exports = {
         typeClassifier.addDocument("notebook", "Book/Note");
         typeClassifier.addDocument("note book", "Book/Note");
 
-        typeClassifier.addDocument("library textbook", "Library/Book/Text");
+        typeClassifier.addDocument("library textbook", "Libr`ary/Book/Text");
         typeClassifier.addDocument("library text book", "Library/Book/Text");
         typeClassifier.addDocument("library reference book", "Library/Book/Reference");
         typeClassifier.addDocument("library ref book", "Library/Book/Reference");
+
+        typeClassifier.addDocument("project", "Project");
+        typeClassifier.addDocument("proj", "Project");
+        typeClassifier.addDocument("report", "Report");
+
+        typeClassifier.addDocument("presentation", "Presentation");
+        typeClassifier.addDocument("double sided sheets", "Sheets/Double");
+        typeClassifier.addDocument("double side sheet", "Sheets/Double");
+        typeClassifier.addDocument("single side sheet", "Sheets/Single");
+        typeClassifier.addDocument("single sided sheets", "Sheets/Single");
+        typeClassifier.addDocument("file", "File");
+        typeClassifier.addDocument("index", "Index");
+        typeClassifier.addDocument("certificate", "Certificate");
+        typeClassifier.addDocument("buy double sided sheets", "Buy/Sheets/Double");
+        typeClassifier.addDocument("buy double side sheet", "Buy/Sheets/Double");
+        typeClassifier.addDocument("buy single side sheet", "Buy/Sheets/Single");
+        typeClassifier.addDocument("buy single sided sheets", "Buy/Sheets/Single");
+        typeClassifier.addDocument("buy file", "Buy/File");
+        typeClassifier.addDocument("buy index", "Buy/Index");
+        typeClassifier.addDocument("buy certificate", "Buy/Certificate");
         typeClassifier.train();
     },
     trainDays: function () {
@@ -135,6 +155,8 @@ module.exports = {
         dayClassifier.addDocument("next sunday", "Next/Sunday");
         dayClassifier.addDocument("next sun", "Next/Sunday");
 
+        dayClassifier.addDocument("today", "Today");
+        dayClassifier.addDocument("aaj", "Today");
         dayClassifier.addDocument("tomorrow", "Tomorrow");
         dayClassifier.addDocument("tom", "Tomorrow");
         dayClassifier.addDocument("by tomorrow", "Tomorrow");
@@ -197,8 +219,8 @@ module.exports = {
         var today = new Date();
         var subject = this.getSubject(query);
         var type = this.getType(query);
-        var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday",];
-        console.log("today is: " + days[today.getDay() - 1]);
+        var days = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday"];
+        console.log("today is: " + days[today.getDay()]);
         if (subject.found && !res.found) {
             if (type.class.search("Experiment") != -1) {
                 timetable.forEach(function (day, index, tt) {
@@ -206,12 +228,12 @@ module.exports = {
                         if (period != undefined)
                             if (period.type == "prac")
                                 if (period.subject(2) == subject.class)
-                                    if (index == today.getDay() - 1)
-                                    { res.class = "Today"; res.found = true; }
-                                    else if (index < today.getDay - 1)
-                                    { res.class = "Next/" + days[index]; res.found = true; }
+                                    if (index+1 == today.getDay())
+                                    { res.class = "Today"; res.found = true;}
+                                    else if (index < today.getDay)
+                                    { res.class = "Next/" + days[index+1]; res.found = true; }
                                     else
-                                    { res.class = days[index]; res.found = true; }
+                                    { res.class = days[index+1]; res.found = true; }
                     })
                 })
             }

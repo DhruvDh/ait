@@ -26,8 +26,13 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
-app.get(['/', '/login', '/overview'], function (req, res) {
+app.get(['/', '/login', '/overview', '/register'], function (req, res) {
     res.sendFile(path.join(__dirname, 'main.html'));
+});
+
+app.get('/register.html', function (req, res) {
+    console.log("got a Request")
+    res.sendFile(path.join(__dirname, 'register.html'));
 });
 
 app.get('/app/app.js', function (req, res) {
@@ -132,7 +137,7 @@ app.post('/training', function (req, res) {
             query: req.body.query,
             subject: JARVIS.getSubject(req.body.query),
             type: JARVIS.getType(req.body.query),
-            day: JARVIS.getDay(req.body.query, timetables[user[0].dept + "/" + user[0].year + "/" + user[0].div]),
+            day: JARVIS.getDay(req.body.query, timetables[user[0].dept + "/" + user[0].year + "/" + user[0].div], user[0].batch),
             ordinals: JARVIS.getOrdinal(req.body.query)
         }, function (err, todo) {
             res.json({
@@ -168,6 +173,20 @@ app.post('/trainingSEIT', function (req, res) {
             ordinals: JARVISSEIT.getOrdinal(req.body.query)
         });
     }
+});
+
+app.post('/register', function(req, res) {
+    users.insert({
+            user: req.body.user,
+            pass: req.body.pass,
+            dept: "INFT",
+            year: "TE",
+            div: "A",
+            batch: req.body.batch,
+    }, function(err, user) {
+        if(!err)
+            res.sendStatus(200);
+    });
 });
 var server = app.listen(process.env.PORT || '3000', function () {
     //classifier.addDocument('write se experiment 2', 'Write');

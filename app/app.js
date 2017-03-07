@@ -60,6 +60,10 @@ app.config(function ($mdThemingProvider, $routeProvider, $locationProvider) {
             templateUrl: 'overview.html',
             controller: 'toDoControl'
         }).
+        when('/register', {
+            templateUrl: 'register.html',
+            controller: 'regControl'
+        }).
         otherwise({
             redirectTo: '/login'
         });
@@ -86,7 +90,7 @@ app.controller('toDoControl', function ($scope, $http, $window) {
     }    
 });
 
-app.controller('loginControl', function ($scope, authService, $window) {
+app.controller('loginControl', function ($scope, authService, $window, $location) {
     $scope.postData = function () {
         if ($scope.username && $scope.password) {
             var formData = {
@@ -99,7 +103,30 @@ app.controller('loginControl', function ($scope, authService, $window) {
         else
             console.log("Username or password is empty");
     };
+    $scope.goToRegister = function () {
+        $location.path('/register')
+    }
 });
+
+app.controller('regControl', function ($scope, $http, $location) {
+    $scope.user = "";
+    $scope.pass = "";
+    $scope.batch = "";
+    $scope.postData = function () {
+        console.log({
+            "user": $scope.user,
+            "pass": $scope.pass,
+            "batch": $scope.batch
+        });
+        $http.post('/register', {
+            "user": $scope.user,
+            "pass": $scope.pass,
+            "batch": $scope.batch
+        }).success(function(res, status) {
+            $location.path('/login');
+        })
+    }
+})
 
 app.service('authService', function ($http, $window, $location, $rootScope) {
     var response;

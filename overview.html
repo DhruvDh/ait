@@ -1,11 +1,34 @@
+<md-fab-toolbar md-direction="right">
+    <md-fab-trigger>
+        <md-button class="md-fab md-primary">
+            <md-icon class="material-icons">event_note</md-icon>
+        </md-button>
+    </md-fab-trigger>
+    <md-toolbar>
+        <md-fab-actions class="md-toolbar-tools" layout layout-align="center center">
+            <md-button class="md-fab md-raised md-mini md-accent">
+                SE
+            </md-button>
+           <md-button class="md-fab md-raised md-mini md-accent">
+                SWS
+            </md-button>
+            <md-button class="md-fab md-raised md-mini md-accent">
+                AIT
+            </md-button>
+            <md-button class="md-fab md-raised md-mini md-accent">
+                DS
+            </md-button>
+        </md-fab-actions>
+    </md-toolbar>
+</md-fab-toolbar>
 <div layout="column" layout-align="center" style="min-height: 40%">
     <div style="background-color: #303F9F" layout="row">
-            <ul flex-offset="20">
-                <li>Subject: <span ng-if="!res.subject.found">Not Found</span><span ng-if="res.subject.found">{{res.subject.class}}</span> </li>
-                <li>Type: <span ng-if="!res.type.found">Not Found</span><span ng-if="res.type.found">{{res.type.class}}</span> </li>
-                <li>Ordinals: <span ng-repeat="y in res.ordinals">{{y+" "}}</span> </li>
-                <li>Day: <span ng-if="!res.day.found">Not Found</span><span ng-if="res.day.found">{{res.day.class}}</span> </li>
-            </ul>
+        <ul flex-offset="20">
+            <li>Subject: <span ng-if="!res.subject.found">Not Found</span><span ng-if="res.subject.found">{{res.subject.class}}</span>                </li>
+            <li>Type: <span ng-if="!res.type.found">Not Found</span><span ng-if="res.type.found">{{res.type.class}}</span> </li>
+            <li>Ordinals: <span ng-repeat="y in res.ordinals">{{y+" "}}</span> </li>
+            <li>Day: <span ng-if="!res.day.found">Not Found</span><span ng-if="res.day.found">{{res.day.class}}</span> </li>
+        </ul>
 
     </div>
     <div layout="row" layout-align="center center">
@@ -15,8 +38,8 @@
         <md-button class="md-primary md-fab material-icons" ng-click="postQuery()">send</md-button>
     </div>
 </div>
-    <md-list>
-        <md-list-item ng-repeat="x in toDoList track by $index">
-            {{x}}
-        </md-list-item>
-    </md-list>
+<md-list>
+    <md-list-item ng-repeat="x in toDoList track by $index">
+        {{x}}
+    </md-list-item>
+</md-list>
