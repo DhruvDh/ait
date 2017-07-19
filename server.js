@@ -50,6 +50,10 @@ app.get('/overview.html', function (req, res) {
     res.sendFile(path.join(__dirname, 'overview.html'));
 });
 
+app.get('/unOrdinary.html', function (req, res) {
+    res.sendFile(path.join(__dirname, 'unOrdinary.html'));
+});
+
 app.post('/getToDo', function(req, res) {
     if(req.body.userID !== undefined)
     {
